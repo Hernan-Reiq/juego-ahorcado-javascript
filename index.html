@@ -5,44 +5,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juego del Ahorcado por Hernán</title>
+    <style>
+        code {
+            font-family: Consolas, "courier new";
+            color: crimson;
+            background-color: #f1f1f1;
+            padding: 2px;
+            font-size: 105%;
+            line-break: normal;
+        }
+    </style>
 </head>
 
 <body>
-    <script>
-        var palabras = ['Computadora', 'Bicicleta', 'Programacion', 'Orquestador', 'Dinero', 'Finanzas', 'Interruptor', 'Vecindario', 'Alemana', 'Banco', 'Ola', 'Imposible'];
 
-        var seleccionNumeroPalabra = Math.floor(Math.random() * palabras.length);
+<h2>Para probar el codigo, abre la consola del navegador en F12 o Click derecho e Inspeccionar elemento.</h2>
+<h2>Vas a la pestaña "Console" y por ultimo haces click en Jugar Ahora</h2>
 
-        var palabraSeleccionda = palabras[seleccionNumeroPalabra];
+<button id="jugar-ahora">Jugar Ahora</button>
 
-        var arrCaracteres = palabraSeleccionda.toUpperCase().split('');
-        var arrGuiones = [];
+    <br><br>
 
+    <h1>Todo el código utilizado</h1>
+    <hr>
+    <pre>
+    var palabras = ['Computadora', 'Bicicleta', 'Programacion', 'Orquestador', 'Dinero', 'Finanzas', 'Interruptor', 'Vecindario', 'Alemana', 'Banco', 'Ola', 'Imposible'];
+    
+    var seleccionNumeroPalabra = Math.floor(Math.random() * palabras.length);
+    
+    var palabraSeleccionda = palabras[seleccionNumeroPalabra];
+    
+    var arrCaracteres = palabraSeleccionda.toUpperCase().split('');
+    var arrGuiones = [];
+    
+    for (var i = 0; i < arrCaracteres.length; i++) {
+        arrGuiones.push('_');
+    }
+    
+    var intentos = 5;
+    
+    console.log(`Adivina la palabra de ${arrGuiones.length} carácteres.`)
+    console.log(arrGuiones.join(' '));
+    
+    do {
+        var letra = prompt('Escriba una letra');
+        letra = letra.toUpperCase();
+        var letraEncontrada = false;
+        
         for (var i = 0; i < arrCaracteres.length; i++) {
-            arrGuiones.push('_');
-        }
-
-        var intentos = 5;
-
-        console.log(`Adivina la palabra de ${arrGuiones.length} carácteres.`)
-        console.log(arrGuiones.join(' '));
-
-        do {
-            var letra = prompt('Escriba una letra');
-            letra = letra.toUpperCase();
-            var letraEncontrada = false;
-
-            for (var i = 0; i < arrCaracteres.length; i++) {
-                if (arrCaracteres[i] == letra) {
-                    arrGuiones[i] = letra;
-                    letraEncontrada = true;
-                }
+            if (arrCaracteres[i] == letra) {
+                arrGuiones[i] = letra;
+                letraEncontrada = true;
             }
-
-            var juegoTerminado = false;
-
-            if (!letraEncontrada) {
-                console.log('La letra que escribiste no está dentro de la palabra oculta');
+        }
+        
+        var juegoTerminado = false;
+        
+        if (!letraEncontrada) {
+            console.log('La letra que escribiste no está dentro de la palabra oculta');
                 console.log(arrGuiones.join(' '));
                 intentos--;
                 console.log(`Intentos restantes ${intentos}`);
@@ -51,12 +71,12 @@
                     console.log('Se trataba de ' + arrCaracteres.join(''))
                 }
             } else {
-
+                
                 if(arrGuiones.indexOf('_') == -1){
                     juegoTerminado = true;
                     intentos = 0;
                 }
-
+                
                 if(!juegoTerminado){
                     console.log('Muy bien, ahora falta menos!');
                     console.log(arrGuiones.join(' '));
@@ -70,8 +90,74 @@
 
         } while (intentos > 0);
 
+        
+    </pre>
+    <hr>
+    <script>
+        var boton = document.getElementById('jugar-ahora')
+        boton.addEventListener('click', () => JugarAhora());
+        function JugarAhora() {
+            var palabras = ['Computadora', 'Bicicleta', 'Programacion', 'Orquestador', 'Dinero', 'Finanzas', 'Interruptor', 'Vecindario', 'Alemana', 'Banco', 'Ola', 'Imposible'];
+
+            var seleccionNumeroPalabra = Math.floor(Math.random() * palabras.length);
+
+            var palabraSeleccionda = palabras[seleccionNumeroPalabra];
+
+            var arrCaracteres = palabraSeleccionda.toUpperCase().split('');
+            var arrGuiones = [];
+
+            for (var i = 0; i < arrCaracteres.length; i++) {
+                arrGuiones.push('_');
+            }
+
+            var intentos = 5;
+
+            console.log(`Adivina la palabra de ${arrGuiones.length} carácteres.`)
+            console.log(arrGuiones.join(' '));
+
+            do {
+                var letra = prompt('Escriba una letra');
+                letra = letra.toUpperCase();
+                var letraEncontrada = false;
+
+                for (var i = 0; i < arrCaracteres.length; i++) {
+                    if (arrCaracteres[i] == letra) {
+                        arrGuiones[i] = letra;
+                        letraEncontrada = true;
+                    }
+                }
+
+                var juegoTerminado = false;
+
+                if (!letraEncontrada) {
+                    console.log('La letra que escribiste no está dentro de la palabra oculta');
+                    console.log(arrGuiones.join(' '));
+                    intentos--;
+                    console.log(`Intentos restantes ${intentos}`);
+                    if (intentos == 0) {
+                        console.log('Que pena, el juego ha terminado y no pudiste adivinar la palabra oculta...');
+                        console.log('Se trataba de ' + arrCaracteres.join(''))
+                    }
+                } else {
+
+                    if (arrGuiones.indexOf('_') == -1) {
+                        juegoTerminado = true;
+                        intentos = 0;
+                    }
+
+                    if (!juegoTerminado) {
+                        console.log('Muy bien, ahora falta menos!');
+                        console.log(arrGuiones.join(' '));
+                    } else {
+                        console.log('El juego ha finalizado, has adivinado la palabra oculta!');
+                        console.log(arrGuiones.join(''));
+                    }
+                }
 
 
+
+            } while (intentos > 0);
+        }
     </script>
 </body>
 
